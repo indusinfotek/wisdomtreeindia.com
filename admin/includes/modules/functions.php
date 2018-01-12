@@ -1,6 +1,6 @@
 <?php
-    ini_set("include_path", '/home/abworzlc/php:' . ini_get("include_path") );
-    include '../_settings/constant.php'; 
+    //ini_set("include_path", '/home/abworzlc/php:' . ini_get("include_path") );
+    include '../settings/constant.php'; 
     include('Mail.php');
     include('Mail/mime.php');
     include 'mimetype.php';
