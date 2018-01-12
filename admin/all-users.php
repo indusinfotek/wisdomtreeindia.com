@@ -2,24 +2,24 @@
     ob_start();
     //error_reporting(E_ALL ^ E_NOTICE);
     @session_start();
-    ini_set('allow_url_include', 1);    
+    ini_set('allow_url_include', 1);
     date_default_timezone_set("Asia/Kolkata");
     set_time_limit(600);
     ini_set('max_execution_time',600);
-    
-    include '_includes/_settings/constant.php';
-    include '_includes/_settings/db.php';
-    include '_includes/_modules/functions.php';
-    
+
+    include 'includes/settings/constant.php';
+    include 'includes/settings/db.php';
+    include 'includes/modules/functions.php';
+
     $function = new FUNCTIONS();
-    
+
     global $redirect_uri;
-    
+
     $redirect_uri = $function->getpageurl();
     if(empty($_SESSION['admin_id'])){
         header("Location: login.php?redirect_uri=$redirect_uri");
     }
-    
+
 ?>
 
 <!DOCTYPE html>
@@ -29,18 +29,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>XioShop.com | ADMIN PANEL</title>
-    
-    
-    <link href="_assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="_assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
 
     <!-- FooTable -->
-    <link href="_assets/css/plugins/footable/footable.core.css" rel="stylesheet">
+    <link href="assets/css/plugins/footable/footable.core.css" rel="stylesheet">
 
-    <link href="_assets/css/animate.css" rel="stylesheet">
-    <link href="_assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/animate.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
 
-    <link href="_assets/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+    <link href="assets/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
     <style>
         table.order-items{width: 100%;}
         table.order-items tr td{ padding: 10px;}
@@ -52,14 +52,14 @@
 <body>
     <div id="wrapper">
         <!--Nav Bar-->
-        <?php include '_includes/_templates/navigation.php'; ?>
+        <?php include 'includes/_templates/navigation.php'; ?>
         <!--End Nav Bar-->
-        
+
         <div id="page-wrapper" class="gray-bg">
             <!--Header-->
-            <?php include '_includes/_templates/header.php'; ?>
+            <?php include 'includes/_templates/header.php'; ?>
             <!--End Header-->
-            
+
             <!--Breadcrumb-->
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
@@ -76,7 +76,7 @@
                 <div class="col-lg-2"></div>
             </div>
             <!--End Breadcrumb-->
-            
+
             <!--Content Wrapper-->
             <div class="wrapper wrapper-content animated fadeInRight ecommerce">
                 <!--<div class="ibox-content m-b-sm border-bottom">
@@ -125,15 +125,15 @@
                         </div>
                     </div>
                 </div>-->
-                
+
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="ibox">
                             <div class="ibox-title">
-                                <h5>List of all registered users</h5>  
-                                
+                                <h5>List of all registered users</h5>
+
                             </div>
-                            <div class="ibox-content">                                
+                            <div class="ibox-content">
                                 <div class="col-lg-12">
                                     <input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
                                     <table class="footable table table-stripped table-bordered" data-page-size="25" data-filter=#filter>
@@ -151,10 +151,10 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php  
+                                            <?php
                                                 $user = $function->getUser(NULL,NULL,NULL,NULL,NULL,NULL,'publishdate DESC');
 
-                                                for($i=0;$i<$user['count'];$i++){                                                    
+                                                for($i=0;$i<$user['count'];$i++){
                                             ?>
                                             <tr class="<?=($user['isactive'][$i]==1)?'active-user':'inactive-user';?>">
                                                 <td><?=($i+1);?></td>
@@ -184,32 +184,32 @@
                     </div>
                 </div>
             </div>
-            
-            
+
+
             <!--End Content Wrapper-->
         </div>
     </div>
-    
+
     <!-- Mainly scripts -->
-    <script src="_assets/js/jquery-2.1.1.js"></script>
-    <script src="_assets/js/bootstrap.min.js"></script>
-    <script src="_assets/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="_assets/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="assets/js/jquery-2.1.1.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="assets/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
     <!-- Custom and plugin javascript -->
-    <script src="_assets/js/inspinia.js"></script>
-    <script src="_assets/js/plugins/pace/pace.min.js"></script>
+    <script src="assets/js/inspinia.js"></script>
+    <script src="assets/js/plugins/pace/pace.min.js"></script>
 
     <!-- Data picker -->
-    <script src="_assets/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+    <script src="assets/js/plugins/datapicker/bootstrap-datepicker.js"></script>
 
     <!-- FooTable -->
-    <script src="_assets/js/plugins/footable/footable.all.min.js"></script>
-    
+    <script src="assets/js/plugins/footable/footable.all.min.js"></script>
+
     <!--jsPDF-->
     <script src="http://html2canvas.hertzen.com/build/html2canvas.js"></script>
     <script src="https://cdn.jsdelivr.net/ace/1.1.01/noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-    <script src="_assets/js/jsPDF/dist/jspdf.min.js"></script>
+    <script src="assets/js/jsPDF/dist/jspdf.min.js"></script>
 
     <!-- Page-Level Scripts -->
     <script>
@@ -222,4 +222,3 @@
 </body>
 
 </html>
-

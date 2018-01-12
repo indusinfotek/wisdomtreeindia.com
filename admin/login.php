@@ -2,32 +2,32 @@
     ob_start();
     //error_reporting(E_ALL ^ E_NOTICE);
     @session_start();
-    ini_set('allow_url_include', 1);    
+    ini_set('allow_url_include', 1);
     date_default_timezone_set("Asia/Kolkata");
     set_time_limit(600);
     ini_set('max_execution_time',600);
-    
-    include '_includes/_settings/constant.php';
-    include '_includes/_settings/db.php';
-    include '_includes/_modules/functions.php';
-    
+
+    include 'includes/settings/constant.php';
+    include 'includes/settings/db.php';
+    include 'includes/modules/functions.php';
+
     $function = new FUNCTIONS();
-    
+
     global $redirect_uri;
-    
+
     $redirect_uri = (!empty($_GET['redirect_uri']))?$_GET['redirect_uri']:$adminbasepath.'single-listing.php';
-    
+
     if(isset($_POST['btnLogin'])){
         $username = (!empty($_POST['username']))?$_POST['username']:'';
         $password = (!empty($_POST['password']))?$_POST['password']:'';
-        
+
         if(empty($username) || empty($password)){
             if(empty($username)){
                 echo "<script>alert('Email can\'t be blank.');$('#username').focus();</script>";
             }else{
                 echo "<script>alert('Password can\'t be blank.');$('#password').focus();</script>";
-            }            
-        }else{        
+            }
+        }else{
             $adminuser = $function->getAdminUser(NULL, $username, NULL, $password, 1);
             //print_r($adminuser);
             if(!empty($adminuser['count']) && $adminuser['isactive'][0]=='1'){
@@ -50,11 +50,11 @@
 
     <title>XIOSHOP | Admin Login</title>
 
-    <link href="_assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="_assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
 
-    <link href="_assets/css/animate.css" rel="stylesheet">
-    <link href="_assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/animate.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
 
 </head>
 
@@ -64,7 +64,7 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3 text-center m-b-sm">
                 <a href="#">
-                    <img src="_assets/img/xioshop-logo-color-min.png">
+                    <img src="assets/img/xioshop-logo-color-min.png">
                 </a>
             </div>
             <div class="col-md-6 col-md-offset-3">
@@ -91,7 +91,7 @@
         <hr/>
         <div class="row">
             <div class="col-md-6">
-                © 2015-2016 XioShop (www.xioshop.com). All rights reserved.
+                © 2015-2016 <?=SITE_TITLE;?>. All rights reserved.
             </div>
             <div class="col-md-6 text-right">
                 <small>Developed &amp; Managed by <a href="http://www.abworks.net" target="_blank">AB Works</a></small>

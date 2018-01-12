@@ -3,38 +3,38 @@
     ob_start();
     //error_reporting(E_ALL ^ E_NOTICE);
     @session_start();
-    ini_set('allow_url_include', 1);    
+    ini_set('allow_url_include', 1);
     date_default_timezone_set("Asia/Kolkata");
     set_time_limit(600);
     ini_set('max_execution_time',600);
-    
-    include '_includes/_settings/constant.php';
-    include '_includes/_settings/db.php';
-    include '_includes/_modules/functions.php';
-    require_once '_includes/_modules/excel_reader.php';
-    
+
+    include 'includes/settings/constant.php';
+    include 'includes/settings/db.php';
+    include 'includes/modules/functions.php';
+    require_once 'includes/modules/excel_reader.php';
+
     $function = new FUNCTIONS();
-    
+
     $redirect_uri = $function->getpageurl(); //echo 'session: '.$_SESSION['admin_id'];
     if(empty($_SESSION['admin_id'])){
         header("Location: login.php?redirect_uri=$redirect_uri");
         //header("Location: login.php");
     }
-    
+
     global $isUpdated;
-    
+
     if(isset($_POST['btnUploadFile'])){
         $action = $_POST['action'];
         $new_file_name = strtoupper(uniqid('FILE',false));
         //echo "FILE NAME: ".$_FILES["file"]["name"];
         if($_FILES["file"]["name"]){
-            $foldername = "_uploads/files/";            
+            $foldername = "_uploads/files/";
             $file = $function->uploadExcelFile($new_file_name,$foldername, 'file');
         }
         //print_r($file);
-        
+
         $data = new Spreadsheet_Excel_Reader($foldername.$file[2]);
-        
+
         for($i=0;$i<count($data->sheets);$i++){
             if(count($data->sheets[$i][cells])>0){
                 for($j=2;$j<=count(@$data->sheets[$i][cells]);$j++){
@@ -50,15 +50,15 @@
                     $sellingprice = (json_encode(explode(",", str_replace(" ", "", @$data->sheets[$i][cells][$j][10]))));
                     $image = ($action==0)?$pid.".jpg":(@$data->sheets[$i][cells][$j][11]);
                     $isactive = (@$data->sheets[$i][cells][$j][12]);
-                    
+
                     $ipaddress = $function->getClientIP();
-                    
-                    if($action==0){                    
+
+                    if($action==0){
                         $sql = "INSERT INTO `product` (pid, sku, category, title, title_hin, tags, description, product_weight, mrp, selling_price, image, isactive, ipaddress) "
                                 . "VALUES ('$pid', '$sku', '$category', '$title', '$title_hin', '$keywords', '$description', '$product_weight', '$mrp', '$sellingprice', '$image', '$isactive', '$ipaddress')";
 
-                        
-                        
+
+
                     }elseif($action==1){
                         $sql = "UPDATE `product` SET "
                             . "sku = '$sku', "
@@ -81,7 +81,7 @@
                     $dbname = MAINDB;
                     $db->select_db($dbname);
                     $result = $db->query($sql);
-                    
+
                     if(!empty($result)){
                         $isUpdated = 1;
                     }else {
@@ -91,7 +91,7 @@
             }
         }
     }
-    
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -102,41 +102,41 @@
 
     <title>XioShop.com | ADMIN PANEL</title>
 
-    <link href="_assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="_assets/font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="_assets/css/plugins/iCheck/custom.css" rel="stylesheet">
-    
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="assets/css/plugins/iCheck/custom.css" rel="stylesheet">
+
     <!--JSwitch-->
-    <link href="_assets/css/plugins/switchery/switchery.css" rel="stylesheet">
-    
+    <link href="assets/css/plugins/switchery/switchery.css" rel="stylesheet">
+
     <!-- Toastr style -->
-    <link href="_assets/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="assets/css/plugins/toastr/toastr.min.css" rel="stylesheet">
 
     <!-- Gritter -->
-    <link href="_assets/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
-    
+    <link href="assets/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+
 	<!-- Morris -->
-    <link href="_assets/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
-    
+    <link href="assets/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+
     <!--Tags Input-->
-    <link href="_assets/css/bootstrap-tagsinput.css" rel="stylesheet">
-    
-    <link href="_assets/css/animate.css" rel="stylesheet">
-    <link href="_assets/css/style.css" rel="stylesheet"> 
-    
+    <link href="assets/css/bootstrap-tagsinput.css" rel="stylesheet">
+
+    <link href="assets/css/animate.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+
 </head>
 
 <body>
     <div id="wrapper">
         <!--Nav Bar-->
-        <?php include '_includes/_templates/navigation.php'; ?>
+        <?php include 'includes/_templates/navigation.php'; ?>
         <!--End Nav Bar-->
-        
+
         <div id="page-wrapper" class="gray-bg dashbard-1">
             <!--Header-->
-            <?php include '_includes/_templates/header.php'; ?>
+            <?php include 'includes/_templates/header.php'; ?>
             <!--End Header-->
-            
+
             <!--Breadcrumb-->
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
@@ -156,7 +156,7 @@
                 <div class="col-lg-2"></div>
             </div>
             <!--End Breadcrumb-->
-            
+
             <!--Content Wrapper-->
             <div class="wrapper wrapper-content animated fadeInRight">
                 <div class="row">
@@ -168,31 +168,31 @@
                                     <label class="col-sm-2 control-label">ACTION</label>
                                     <div class="col-sm-10">
                                         <div class="i-checks">
-                                            <label> 
-                                                <input type="radio" checked="" value="0" name="action" /> 
-                                                <i></i>&nbsp;&nbsp;New Listing 
+                                            <label>
+                                                <input type="radio" checked="" value="0" name="action" />
+                                                <i></i>&nbsp;&nbsp;New Listing
                                             </label>
                                         </div>
                                         <div class="i-checks">
-                                            <label> 
-                                                <input type="radio" checked="" value="1" name="action" /> 
-                                                <i></i>&nbsp;&nbsp;Update Listing 
+                                            <label>
+                                                <input type="radio" checked="" value="1" name="action" />
+                                                <i></i>&nbsp;&nbsp;Update Listing
                                             </label>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>
-                                
-                                <div class="hr-line-dashed"></div>  
-                                
+
+                                <div class="hr-line-dashed"></div>
+
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">BROWSE EXCEL</label>
                                     <div class="col-sm-10">
                                         <input type="file" name="file" class="btn btn-white"/>
                                     </div>
                                 </div>
-                                
-                                <div class="hr-line-dashed"></div>                                
-                                
+
+                                <div class="hr-line-dashed"></div>
+
                                 <div class="form-group">
                                     <div class="col-sm-4 col-sm-offset-2">
                                         <button id="btnUploadFile" name="btnUploadFile" class="btn btn-primary" type="submit">Upload File</button>
@@ -208,34 +208,34 @@
     </div>
 
     <!-- Mainly scripts -->
-    <script src="_assets/js/jquery-2.1.1.min.js"></script>
-    <script src="_assets/js/bootstrap.min.js"></script>
-    <script src="_assets/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="_assets/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    
+    <script src="assets/js/jquery-2.1.1.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="assets/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
     <!-- Switchery -->
-   <script src="_assets/js/plugins/switchery/switchery.js"></script>
-    
+   <script src="assets/js/plugins/switchery/switchery.js"></script>
+
     <!--Tags Input-->
-    <script src="_assets/js/bootstrap-tagsinput.js"></script>
-    
+    <script src="assets/js/bootstrap-tagsinput.js"></script>
+
     <!-- Peity -->
-    <script src="_assets/js/plugins/peity/jquery.peity.min.js"></script>
-    <script src="_assets/js/demo/peity-demo.js"></script>
-	
+    <script src="assets/js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="assets/js/demo/peity-demo.js"></script>
+
     <!-- Custom and plugin javascript -->
-    <script src="_assets/js/inspinia.js"></script>
-    <script src="_assets/js/plugins/pace/pace.min.js"></script>
-    
+    <script src="assets/js/inspinia.js"></script>
+    <script src="assets/js/plugins/pace/pace.min.js"></script>
+
     <!-- jQuery UI -->
-    <script src="_assets/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="assets/js/plugins/jquery-ui/jquery-ui.min.js"></script>
 
     <!-- iCheck -->
-    <script src="_assets/js/plugins/iCheck/icheck.min.js"></script>
-    
+    <script src="assets/js/plugins/iCheck/icheck.min.js"></script>
+
     <!-- Toastr (Notification/Alert Message)-->
-    <script src="_assets/js/plugins/toastr/toastr.min.js"></script>
-    
+    <script src="assets/js/plugins/toastr/toastr.min.js"></script>
+
     <!--Google Transliteration-->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
@@ -267,11 +267,11 @@
       google.setOnLoadCallback(onLoad);
     </script>
     <!--End Google Transliteration-->
-    
+
     <script>
         $(document).ready(function(){
             var elem = document.querySelector('#isactive.js-switch');
-            var switchery = new Switchery(elem, { color: '#1AB394' });            
+            var switchery = new Switchery(elem, { color: '#1AB394' });
         });
         $(document).ready(function () {
             $('.i-checks').iCheck({
@@ -283,7 +283,7 @@
         $(".file-img-changer").change(function(){
             readURL(this);
         });
-        
+
         //Function to show image before upload
         function readURL(input) {
             if (input.files && input.files[0]) {
@@ -295,12 +295,12 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
-        
+
         //If UPDATED
-        <?php 
+        <?php
             if($isUpdated==1){$isUpdated=0;
         ?>
-                toastr.success('Product added/updated successfully.', 'SUCCESS'); 
+                toastr.success('Product added/updated successfully.', 'SUCCESS');
                 window.location.href=window.location.href;
         <?php }elseif($isUpdated==2){$isUpdated=0; ?>
                 window.location.href=window.location.href;
@@ -308,8 +308,8 @@
         <?php } ?>
         // END IF UPDATED
     </script>
-    
-    
+
+
 </body>
 
 </html>
