@@ -1,6 +1,6 @@
 <?php
     $basePath       = 'http://'.$_SERVER['SERVER_NAME'].'/';
-    $adminbasePath  = $basePath.'__admin/';
+    $adminbasePath  = $basePath.'admin/';
     define('ADMINMAIL', 'admin_wisdomtree@abworks.in');
     define('MAINDB', 'dbWisdomTreeIndia');
     define('SITE_TITLE', 'Wisdom Tree India');
