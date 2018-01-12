@@ -1,0 +1,29 @@
+table { text-transform:uppercase; }
+table thead tr th.slide-no { width:10% }
+table thead tr th.slide-img { width:40% }
+table thead tr th.date-time { width:18% }
+table thead tr th.seller-id { width:15% }
+table thead tr th.approval { width:45% }
+table thead tr th.status { width:15% }
+table thead tr th.action { width:15% }
+table tbody tr td { border:1px solid #ccc; }
+table tbody tr td.action-btn { text-align:center }
+table tbody tr td { vertical-align:middle !important; }
+table tbody tr td img { width:30%; }
+table tbody tr td button i { margin-left:10px; }
+table tbody tr td button.btn { width:100%; margin:10px 0px 5px; font-size:12px; }
+table tbody tr td.add img { width:45%; }
+table tbody tr td.deals img { width:30%; }
+table tbody tr td.banner img { width:100%; }
+
+a.add-slide-btn { float:right; padding:6px 12px; border:1px solid #1ab394; border-radius: 3px; background: #1ab394; text-transform:uppercase; color:#fff; }
+a.add-slide-btn:hover, add-slide-btn:focus { color:#fff; border:1px solid #057c64; background: #057c64; }
+table tbody tr td ol.breadcrumb { background:none; }
+.padding-btm { padding-bottom:0px !important; }
+.upload-img { width:50%; }
+.panel-options { width:100%; float:left; margin-bottom:15px; }
+.panel-options ul { margin:0px; padding:0px; }
+.panel-options ul li.active { font-weight:bold; }
+.panel-options ul li { float:left; list-style:none; }
+.panel-options ul li a { padding:5px 10px;}
+.panel-options ul li.active, .tab ul li a { border-left:none; }
